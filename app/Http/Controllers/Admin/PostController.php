@@ -6,6 +6,7 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -39,8 +40,17 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-
         $val_data = $request->validated();
+        if ($request->hasFile('cover_img')){
+            $request->validate([    
+                'cover_img' => 'nullable|image|max:500'
+                
+                ]
+            );
+            $path = storage::put('posts_images', $request -> cover_img);
+            $val_data['cover_img'] = $path;
+        }
+        
         Post::create($val_data);
         return redirect()->route('admin.posts.index')->with('message','post crated successfully');
     }

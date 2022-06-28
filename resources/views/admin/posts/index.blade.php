@@ -5,7 +5,7 @@
         @foreach ($posts as $post)
         <div class="text-center col-3">
             <p>{{$post['title']}}</p>
-            <a href="{{route('admin.posts.show', $post->id)}}"><img class="img-fluid" src="{{$post['cover_img']}}" alt="{{$post['title']}}"></a>
+            <a href="{{route('admin.posts.show', $post->id)}}"><img class="img-fluid" src="{{asset('storage/' . $post->cover_img)}}" alt="{{$post['title']}}"></a>
         </div>
         @endforeach
         <a class="btn" href="{{route('admin.posts.create')}}">crea post</a>
